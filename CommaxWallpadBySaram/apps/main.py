@@ -244,7 +244,12 @@ def do_work(config, device_list):
                 sendcmd = DEVICE_LISTS[device]['list'][idx-1].get('command' + value)
                 if sendcmd:
                     recvcmd = [DEVICE_LISTS[device]['list'][idx-1].get('state' + value, 'NULL')]
-                    QUEUE.append({'sendcmd': sendcmd, 'recvcmd': recvcmd, 'count': 0})
+                    if debug:
+                        log('[DEBUG] RyeongHo revision => Queued + 5')
+                        
+                    for i in range(5):
+                    	QUEUE.append({'sendcmd': sendcmd, 'recvcmd': recvcmd, 'count': 0})
+                    		
                     if debug:
                         log('[DEBUG] Queued ::: sendcmd: {}, recvcmd: {}'.format(sendcmd, recvcmd))
                 else:
