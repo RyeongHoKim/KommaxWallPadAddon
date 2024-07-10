@@ -244,12 +244,7 @@ def do_work(config, device_list):
                 sendcmd = DEVICE_LISTS[device]['list'][idx-1].get('command' + value)
                 if sendcmd:
                     recvcmd = [DEVICE_LISTS[device]['list'][idx-1].get('state' + value, 'NULL')]
-                    if debug:
-                        log('[DEBUG] RyeongHo revision => Queued + 5')
-                        
-                    for i in range(5):
-                    	QUEUE.append({'sendcmd': sendcmd, 'recvcmd': recvcmd, 'count': 0})
-                    		
+                    QUEUE.append({'sendcmd': sendcmd, 'recvcmd': recvcmd, 'count': 0})		
                     if debug:
                         log('[DEBUG] Queued ::: sendcmd: {}, recvcmd: {}'.format(sendcmd, recvcmd))
                 else:
@@ -515,13 +510,16 @@ def do_work(config, device_list):
                         if elfin_log:
                             log('[SIGNAL] 신호 전송: {}'.format(send_data))
                         mqtt_client.publish(ELFIN_TOPIC + '/send', bytes.fromhex(send_data['sendcmd']))
+                        
+                        #메시지 Recv할때까지 계속 추가.
+                        QUEUE.append(send_data)
                         # await asyncio.sleep(0.01)
-                        if send_data['count'] < 5:
-                            send_data['count'] = send_data['count'] + 1
-                            QUEUE.append(send_data)
-                        else:
-                            if elfin_log:
-                                log('[SIGNAL] Send over 5 times. Send Failure. Delete a queue: {}'.format(send_data))
+                        #if send_data['count'] < 5:
+                        #    send_data['count'] = send_data['count'] + 1
+                        #    QUEUE.append(send_data)
+                        #else:
+                        #    if elfin_log:
+                        #        log('[SIGNAL] Send over 5 times. Send Failure. Delete a queue: {}'.format(send_data))
             except Exception as err:
                 log('[ERROR] send_to_elfin(): {}'.format(err))
                 return True
