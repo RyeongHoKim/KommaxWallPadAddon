@@ -512,7 +512,11 @@ def do_work(config, device_list):
                         mqtt_client.publish(ELFIN_TOPIC + '/send', bytes.fromhex(send_data['sendcmd']))
                         
                         #메시지 Recv할때까지 계속 추가.
+                        send_data['count'] = send_data['count'] + 1
                         QUEUE.append(send_data)
+                        if elfin_log:
+                        	log('[SIGNAL] Send try count : {}'.format(send_data['count']))
+                                
                         # await asyncio.sleep(0.01)
                         #if send_data['count'] < 5:
                         #    send_data['count'] = send_data['count'] + 1
