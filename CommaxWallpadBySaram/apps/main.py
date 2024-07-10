@@ -409,7 +409,7 @@ def do_work(config, device_list):
                         payload = {
                             "device": {
                                 "identifiers": "cwbs",
-                                "name": "코맥스 월패드 by Saram",
+                                "name": "코맥스 월패드 by TcT",
                                 "manufacturer": "commax",
                             },
                             "device_class": DEVICE_LISTS[device]["type"],
@@ -432,7 +432,7 @@ def do_work(config, device_list):
                         payload = {
                             "device": {
                                 "identifiers": "cwbs",
-                                "name": "코맥스 월패드 by Saram",
+                                "name": "코맥스 월패드 by TcT",
                                 "manufacturer": "commax",
                             },
                             "~": f'{HA_TOPIC}/{device}{idx + 1}/power',
@@ -454,7 +454,7 @@ def do_work(config, device_list):
                         payload = {
                             "device": {
                                 "identifiers": "cwbs",
-                                "name": "코맥스 월패드 by Saram",
+                                "name": "코맥스 월패드 by TcT",
                                 "manufacturer": "commax",
                             },
                             "device_class": 'energy',
@@ -541,7 +541,7 @@ def do_work(config, device_list):
 
 
 if __name__ == '__main__':
-    log("'Commax Wallpad by Saram'을 시작합니다.")
+    log("'Commax Wallpad by TcT'을 시작합니다.")
     with open('/data/options.json') as file:
         CONFIG = json.load(file)
     try:
