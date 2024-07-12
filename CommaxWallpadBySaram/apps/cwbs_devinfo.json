@@ -67,11 +67,10 @@
     "stateON": "F6040101000000FC"
   },
   "EV": {
-    "type": "button",
+    "type": "switch",
     "Number": 1,
-    "commandON": "A0010100081500BF",
-
-    "stateON": "2301000000000024",
+    "commandON": "A001010008F5009F",
+    "stateON": "300E00000000003E",
     "BasementFloor": 2
   }
 }
