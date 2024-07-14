@@ -516,8 +516,9 @@ def do_work(config, device_list):
                         QUEUE.append(send_data)
                         if elfin_log:
                         	log('[SIGNAL] Send try count : {}'.format(send_data['count']))
-                                
-                        # await asyncio.sleep(0.01)
+                        
+                        #슬립이 없으면 너무 빨리보내니까 슬립좀 주자.        
+                        await asyncio.sleep(0.1)
                         #if send_data['count'] < 5:
                         #    send_data['count'] = send_data['count'] + 1
                         #    QUEUE.append(send_data)

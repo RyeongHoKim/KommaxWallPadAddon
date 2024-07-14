@@ -68,7 +68,7 @@
   },
   "EV": {
     "type": "switch",
-    "Number": 1,
+    "Number": 2,
     "commandON": "A001010008F5009F",
     "stateON": "300E00000000003E",
     "BasementFloor": 2
