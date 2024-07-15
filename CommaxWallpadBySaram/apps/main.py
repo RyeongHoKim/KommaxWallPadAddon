@@ -197,7 +197,8 @@ def do_work(config, device_list):
             key = topics[1] + topics[2]
             idx = int(''.join(re.findall('\d', topics[1])))
             value = 'ON' if value == 'heat' else value.upper()
-						log('[RY!!!!] 디버그가 먹으면 여기에 EV 명령어가 일단 찍혀야함.')
+						log('일단 여기 뭐라도 찍혀야함....')
+						
             if device == 'Thermo':
                 curTemp = HOMESTATE.get(topics[1] + 'curTemp')
                 setTemp = HOMESTATE.get(topics[1] + 'setTemp')
