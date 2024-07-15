@@ -423,6 +423,19 @@ def do_work(config, device_list):
                             "modes":["off", "heat"],
                             "mode_state_template": "{% set modes = {'OFF': 'off', 'ON': 'heat'} %} {{modes[value] if value in modes.keys() else 'off'}}"
                                 }
+                    elif DEVICE_LISTS[device]["type"] == "button":
+                    payload = {
+                        "device": {
+                            "identifiers": "cwbs",
+                            "name": "코맥스 월패드 by TcT",
+                            "manufacturer": "commax",
+                        },
+                        "name": f'{device}{idx+1}',
+                        "object_id": f'cwbs_{device.lower()}{idx + 1}',
+                        "unique_id": f'cwbs_{device.lower()}{idx + 1}',
+                        "command_topic": f"{HA_TOPIC}/{device}{idx+1}/click",
+                        "payload_press": "PRESS"
+                    }
                     else:
                         payload = {
                             "device": {
