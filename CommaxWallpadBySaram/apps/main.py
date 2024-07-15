@@ -533,7 +533,7 @@ def do_work(config, device_list):
                         	log('[SIGNAL] Send try count : {}'.format(send_data['count']))
                         
                         #슬립이 없으면 너무 빨리보내니까 슬립좀 주자.        
-                        await asyncio.sleep(0.05S)
+                        await asyncio.sleep(0.05)
                         #if send_data['count'] < 5:
                         #    send_data['count'] = send_data['count'] + 1
                         #    QUEUE.append(send_data)
