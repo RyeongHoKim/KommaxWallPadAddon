@@ -426,18 +426,18 @@ def do_work(config, device_list):
                     elif DEVICE_LISTS[device]["type"] == "button":
                     		payload = {
                         		"device": {
-                                            "identifiers": "cwbs",
-                                            "name": "코맥스 월패드 by TcT",
-                                            "manufacturer": "commax",
+                                "identifiers": "cwbs",
+                                "name": "코맥스 월패드 by TcT",
+                                "manufacturer": "commax",
                         		},
-                                            "name": f'{device}{idx+1}',
-                                            "object_id": f'cwbs_{device.lower()}{idx + 1}',
-                                            "unique_id": f'cwbs_{device.lower()}{idx + 1}',
-                                            "cmd_t": "~/command",
-                                            "stat_t": "~/state"
-                                            "command_topic": f"{HA_TOPIC}/{device}{idx+1}/click",
-                                            "payload_press": "PRESS"
-                    		}
+                            "name": f'{device}{idx+1}',
+                            "object_id": f'cwbs_{device.lower()}{idx + 1}',
+                            "unique_id": f'cwbs_{device.lower()}{idx + 1}',
+                            "cmd_t": "~/command",
+                            "stat_t": "~/state",
+                            "command_topic": f"{HA_TOPIC}/{device}{idx+1}/click",
+                            "payload_press": "PRESS"
+                    				}
                     else:
                         payload = {
                             "device": {
