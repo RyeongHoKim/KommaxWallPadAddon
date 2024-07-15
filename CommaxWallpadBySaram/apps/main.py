@@ -197,7 +197,7 @@ def do_work(config, device_list):
             key = topics[1] + topics[2]
             idx = int(''.join(re.findall('\d', topics[1])))
             value = 'ON' if value == 'heat' else value.upper()
-
+						log('[RY!!!!] 디버그가 먹으면 여기에 EV 명령어가 일단 찍혀야함.')
             if device == 'Thermo':
                 curTemp = HOMESTATE.get(topics[1] + 'curTemp')
                 setTemp = HOMESTATE.get(topics[1] + 'setTemp')
@@ -532,7 +532,7 @@ def do_work(config, device_list):
                         	log('[SIGNAL] Send try count : {}'.format(send_data['count']))
                         
                         #슬립이 없으면 너무 빨리보내니까 슬립좀 주자.        
-                        await asyncio.sleep(0.1)
+                        await asyncio.sleep(0.05S)
                         #if send_data['count'] < 5:
                         #    send_data['count'] = send_data['count'] + 1
                         #    QUEUE.append(send_data)
