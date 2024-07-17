@@ -424,21 +424,6 @@ def do_work(config, device_list):
                             "modes":["off", "heat"],
                             "mode_state_template": "{% set modes = {'OFF': 'off', 'ON': 'heat'} %} {{modes[value] if value in modes.keys() else 'off'}}"
                             }
-                    elif DEVICE_LISTS[device]["type"] == "button":
-                    		payload = {
-                        		"device": {
-                                "identifiers": "cwbs",
-                                "name": "코맥스 월패드 by TcT",
-                                "manufacturer": "commax",
-                        		},
-                        		"device_class": 'EV',
-                        			
-                            "name": f'{device}{idx+1}',
-                            "object_id": f'cwbs_{device.lower()}{idx + 1}',
-                            "unique_id": f'cwbs_{device.lower()}{idx + 1}',
-                            "cmd_t": "~/command",
-                            "stat_t": "~/state"
-                    				}
                     else:
                         payload = {
                             "device": {
@@ -459,11 +444,11 @@ def do_work(config, device_list):
                         if device == "EV":
                             payload["device_class"] = 'ev'
                             payload["entity_category"] = 'diagnostic'    
-									  
+									  log("Device => " + device)
                     log(config_topic)
                     log(json.dumps(payload))
                     mqtt_client.publish(config_topic, json.dumps(payload))
-                    log("Device => " + device)
+                    
                     if device == "Outlet":
                         config_topic = f'homeassistant/sensor/cwbs_{device}{idx + 1}_watt/config'
                         payload = {
