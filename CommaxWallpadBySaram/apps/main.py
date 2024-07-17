@@ -455,6 +455,9 @@ def do_work(config, device_list):
                         if device == "Outlet":
                             payload["device_class"] = 'outlet'
                             payload["entity_category"] = 'diagnostic'
+                        if device == "Ev":
+                            payload["device_class"] = 'ev'
+                            payload["entity_category"] = 'diagnostic'    
 
                     log(config_topic)
                     log(json.dumps(payload))
@@ -478,7 +481,25 @@ def do_work(config, device_list):
                         log(config_topic)
                         log(json.dumps(payload))
                         mqtt_client.publish(config_topic, json.dumps(payload))
-
+                    if device == "Ev":
+                        config_topic = f'homeassistant/sensor/cwbs_{device}{idx + 1}_floor/config'
+                        payload = {
+                            "device": {
+                                "identifiers": "cwbs",
+                                "name": "코맥스 월패드 by TcT",
+                                "manufacturer": "commax",
+                            },
+                            "device_class": 'floor',
+                            "name": f'{device}{idx + 1} F',
+                            "object_id": f'cwbs_{device.lower()}{idx + 1}_floor',
+                            "unique_id": f'cwbs_{device.lower()}{idx + 1}_floor',
+                            "entity_category": 'diagnostic',
+                            "stat_t": f'{HA_TOPIC}/{device}{idx + 1}/floor/state',
+                            "unit_of_measurement": "F"
+                        }
+                        log(config_topic)
+                        log(json.dumps(payload))
+                        mqtt_client.publish(config_topic, json.dumps(payload))
         else:
             errcode = {1: 'Connection refused - incorrect protocol version',
                        2: 'Connection refused - invalid client identifier',
