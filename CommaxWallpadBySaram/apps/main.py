@@ -399,7 +399,6 @@ def do_work(config, device_list):
             # MQTT discover
             for device in DEVICE_LISTS:
                 for idx in range(len(DEVICE_LISTS[device]['list'])):
-
                     config_topic = f'homeassistant/{DEVICE_LISTS[device]["type"]}/commax_{device.lower()}{idx + 1}/config'
                     if DEVICE_LISTS[device]["type"] == "climate":
                         payload = {
@@ -424,6 +423,21 @@ def do_work(config, device_list):
                             "modes":["off", "heat"],
                             "mode_state_template": "{% set modes = {'OFF': 'off', 'ON': 'heat'} %} {{modes[value] if value in modes.keys() else 'off'}}"
                             }
+                    elif DEVICE_LISTS[device]["type"] == "button":
+                    		payload = {
+                        		"device": {
+                                "identifiers": "cwbs",
+                                "name": "코맥스 월패드 by TcT",
+                                "manufacturer": "commax",
+                        		},
+                        		"device_class": 'EV',
+                        			
+                            "name": f'{device}{idx+1}',
+                            "object_id": f'cwbs_{device.lower()}{idx + 1}',
+                            "unique_id": f'cwbs_{device.lower()}{idx + 1}',
+                            "cmd_t": "~/command",
+                            "stat_t": "~/state"
+                    				}
                     else:
                         payload = {
                             "device": {
@@ -441,14 +455,10 @@ def do_work(config, device_list):
                         if device == "Outlet":
                             payload["device_class"] = 'outlet'
                             payload["entity_category"] = 'diagnostic'
-                        if device == "EV":
-                            payload["device_class"] = 'ev'
-                            payload["entity_category"] = 'diagnostic'    
-                    log("Device => " + device)
+
                     log(config_topic)
                     log(json.dumps(payload))
                     mqtt_client.publish(config_topic, json.dumps(payload))
-                    
                     if device == "Outlet":
                         config_topic = f'homeassistant/sensor/cwbs_{device}{idx + 1}_watt/config'
                         payload = {
@@ -468,25 +478,7 @@ def do_work(config, device_list):
                         log(config_topic)
                         log(json.dumps(payload))
                         mqtt_client.publish(config_topic, json.dumps(payload))
-                    if device == "EV":
-                        config_topic = f'homeassistant/sensor/cwbs_{device}{idx + 1}_floor/config'
-                        payload = {
-                            "device": {
-                                "identifiers": "cwbs",
-                                "name": "코맥스 월패드 by TcT",
-                                "manufacturer": "commax",
-                            },
-                            "device_class": 'floor',
-                            "name": f'{device}{idx + 1} F',
-                            "object_id": f'cwbs_{device.lower()}{idx + 1}_floor',
-                            "unique_id": f'cwbs_{device.lower()}{idx + 1}_floor',
-                            "entity_category": 'diagnostic',
-                            "stat_t": f'{HA_TOPIC}/{device}{idx + 1}/floor/state',
-                            "unit_of_measurement": "F"
-                        }
-                        log(config_topic)
-                        log(json.dumps(payload))
-                        mqtt_client.publish(config_topic, json.dumps(payload))
+
         else:
             errcode = {1: 'Connection refused - incorrect protocol version',
                        2: 'Connection refused - invalid client identifier',
