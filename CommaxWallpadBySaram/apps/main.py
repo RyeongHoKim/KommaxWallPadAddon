@@ -197,8 +197,7 @@ def do_work(config, device_list):
             key = topics[1] + topics[2]
             idx = int(''.join(re.findall('\d', topics[1])))
             value = 'ON' if value == 'heat' else value.upper()
-            log('Device Name : ' device)
-						
+
             if device == 'Thermo':
                 curTemp = HOMESTATE.get(topics[1] + 'curTemp')
                 setTemp = HOMESTATE.get(topics[1] + 'setTemp')
