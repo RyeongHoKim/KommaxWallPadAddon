@@ -528,8 +528,8 @@ def do_work(config, device_list):
                         mqtt_client.publish(ELFIN_TOPIC + '/send', bytes.fromhex(send_data['sendcmd']))
                         send_data['count'] = send_data['count'] + 1
                         #메시지 Recv할때까지 계속 추가.
-                        #엘베는 마땅한 리턴이없는데 계속보낼수 없으니 10번만 호출하자.
-                        if send_data['count'] > 10 and send_data['sendcmd'] == "A001010008F5009F":                      
+                        #엘베는 마땅한 리턴이없는데 계속보낼수 없으니 10번만 호출하자.          
+                        if send_data['count'] > 10 and send_data['sendcmd'] == "A0010108F5009F3E":
                         		log("[SIGNAL] Send Ev Call" + send_data['sendcmd'])
                         else :
                             QUEUE.append(send_data)
@@ -538,7 +538,8 @@ def do_work(config, device_list):
                             log('[SIGNAL] Send try count : {}'.format(send_data['count']))
                         
                         #슬립이 없으면 너무 빨리보내니까 슬립좀 주자.        
-                        await asyncio.sleep(0.05)
+                        #await asyncio.sleep(0.05)
+                        await asyncio.sleep(1)
                         
                         #엘베는 마땅한 리턴이없는데 계속보낼수 없으니 5번만 호출하자.
                         #if send_data['count'] < 5 and send_data['sendcmd'] == "A001010008F5009F":
