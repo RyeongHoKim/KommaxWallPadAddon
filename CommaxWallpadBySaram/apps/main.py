@@ -455,7 +455,7 @@ def do_work(config, device_list):
                         if device == "Outlet":
                             payload["device_class"] = 'outlet'
                             payload["entity_category"] = 'diagnostic'
-                        if device == "Ev":
+                        if device == "EV":
                             payload["device_class"] = 'ev'
                             payload["entity_category"] = 'diagnostic'    
 
