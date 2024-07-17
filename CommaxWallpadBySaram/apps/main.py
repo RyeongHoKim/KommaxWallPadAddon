@@ -399,7 +399,7 @@ def do_work(config, device_list):
             # MQTT discover
             for device in DEVICE_LISTS:
                 for idx in range(len(DEVICE_LISTS[device]['list'])):
-                		log("Device => " +device)
+
                     config_topic = f'homeassistant/{DEVICE_LISTS[device]["type"]}/commax_{device.lower()}{idx + 1}/config'
                     if DEVICE_LISTS[device]["type"] == "climate":
                         payload = {
@@ -459,10 +459,11 @@ def do_work(config, device_list):
                         if device == "EV":
                             payload["device_class"] = 'ev'
                             payload["entity_category"] = 'diagnostic'    
-
+									  
                     log(config_topic)
                     log(json.dumps(payload))
                     mqtt_client.publish(config_topic, json.dumps(payload))
+                    log("Device => " + device)
                     if device == "Outlet":
                         config_topic = f'homeassistant/sensor/cwbs_{device}{idx + 1}_watt/config'
                         payload = {
