@@ -197,7 +197,7 @@ def do_work(config, device_list):
             key = topics[1] + topics[2]
             idx = int(''.join(re.findall('\d', topics[1])))
             value = 'ON' if value == 'heat' else value.upper()
-            log('일단 여기 뭐라도 찍혀야함....')
+            log('Device Name : ' device)
 						
             if device == 'Thermo':
                 curTemp = HOMESTATE.get(topics[1] + 'curTemp')
@@ -431,7 +431,8 @@ def do_work(config, device_list):
                                 "name": "코맥스 월패드 by TcT",
                                 "manufacturer": "commax",
                         		},
-                        		"device_class": DEVICE_LISTS[device]["type"],
+                        		"device_class": 'EV',
+                        			
                             "name": f'{device}{idx+1}',
                             "object_id": f'cwbs_{device.lower()}{idx + 1}',
                             "unique_id": f'cwbs_{device.lower()}{idx + 1}',
