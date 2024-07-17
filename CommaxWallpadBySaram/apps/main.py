@@ -481,7 +481,7 @@ def do_work(config, device_list):
                         log(config_topic)
                         log(json.dumps(payload))
                         mqtt_client.publish(config_topic, json.dumps(payload))
-                    if device == "Ev":
+                    if device == "EV":
                         config_topic = f'homeassistant/sensor/cwbs_{device}{idx + 1}_floor/config'
                         payload = {
                             "device": {
