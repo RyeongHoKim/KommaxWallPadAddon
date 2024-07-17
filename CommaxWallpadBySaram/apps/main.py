@@ -526,11 +526,10 @@ def do_work(config, device_list):
                         if elfin_log:
                             log('[SIGNAL] 신호 전송: {}'.format(send_data))
                         mqtt_client.publish(ELFIN_TOPIC + '/send', bytes.fromhex(send_data['sendcmd']))
-                        
+                        send_data['count'] = send_data['count'] + 1
                         #메시지 Recv할때까지 계속 추가.
                         #엘베는 마땅한 리턴이없는데 계속보낼수 없으니 10번만 호출하자.
-                        if send_data['count'] > 10 and send_data['sendcmd'] == "A001010008F5009F":
-                            send_data['count'] = send_data['count'] + 1
+                        if send_data['count'] > 10 and send_data['sendcmd'] == "A001010008F5009F":                      
                         else :
                             QUEUE.append(send_data)
                         		
