@@ -522,6 +522,7 @@ def do_work(config, device_list):
                 elif time.time_ns() - COLLECTDATA['LastRecv'] > 100000000:
                     if QUEUE:
                         send_data = QUEUE.pop(0)
+                        log("[RY Test] : " + send_data['sendcmd'])
                         if elfin_log:
                             log('[SIGNAL] 신호 전송: {}'.format(send_data))
                         mqtt_client.publish(ELFIN_TOPIC + '/send', bytes.fromhex(send_data['sendcmd']))
@@ -534,7 +535,9 @@ def do_work(config, device_list):
                         
                         #슬립이 없으면 너무 빨리보내니까 슬립좀 주자.        
                         await asyncio.sleep(0.05)
-                        #if send_data['count'] < 5:
+                        
+                        #엘베는 마땅한 리턴이없는데 계속보낼수 없으니 5번만 호출하자.
+                        #if send_data['count'] < 5 and send_data['sendcmd'] == "A001010008F5009F":
                         #    send_data['count'] = send_data['count'] + 1
                         #    QUEUE.append(send_data)
                         #else:
