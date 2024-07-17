@@ -398,6 +398,7 @@ def do_work(config, device_list):
                 asyncio.run(update_state('EV', 0, 'OFF'))
             # MQTT discover
             for device in DEVICE_LISTS:
+            		log("Device Name : " +device)
                 for idx in range(len(DEVICE_LISTS[device]['list'])):
                     config_topic = f'homeassistant/{DEVICE_LISTS[device]["type"]}/commax_{device.lower()}{idx + 1}/config'
                     if DEVICE_LISTS[device]["type"] == "climate":
