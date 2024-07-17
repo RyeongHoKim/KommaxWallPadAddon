@@ -529,8 +529,8 @@ def do_work(config, device_list):
                         send_data['count'] = send_data['count'] + 1
                         #메시지 Recv할때까지 계속 추가.
                         #엘베는 마땅한 리턴이없는데 계속보낼수 없으니 10번만 호출하자.          
-                        if send_data['count'] > 10 and send_data['sendcmd'] == "A0010108F5009F3E":
-                        		log("[SIGNAL] Send Ev Call" + send_data['sendcmd'])
+                        if send_data['count'] > 10: #and send_data['sendcmd'] == "A0010108F5009F3E":
+                        		log('[SIGNAL] Send over 10 times. Send Failure. Delete a queue: {}'.format(send_data))
                         else :
                             QUEUE.append(send_data)
                         		
