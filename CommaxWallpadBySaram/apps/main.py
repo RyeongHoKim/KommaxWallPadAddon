@@ -275,6 +275,7 @@ def do_work(config, device_list):
                     break
 
             device_name = prefix_list.get(data[:2])
+            log("recv_from_elfin Device_name => " + device_name)
             if device_name == 'Thermo':
                 curTnum = device_list['Thermo']['curTemp']
                 setTnum = device_list['Thermo']['setTemp']
@@ -400,6 +401,7 @@ def do_work(config, device_list):
             for device in DEVICE_LISTS:
                 for idx in range(len(DEVICE_LISTS[device]['list'])):
                     config_topic = f'homeassistant/{DEVICE_LISTS[device]["type"]}/commax_{device.lower()}{idx + 1}/config'
+                    log("on_connect() device => " + device)
                     if DEVICE_LISTS[device]["type"] == "climate":
                         payload = {
                             "device": {
@@ -423,21 +425,6 @@ def do_work(config, device_list):
                             "modes":["off", "heat"],
                             "mode_state_template": "{% set modes = {'OFF': 'off', 'ON': 'heat'} %} {{modes[value] if value in modes.keys() else 'off'}}"
                             }
-                    elif DEVICE_LISTS[device]["type"] == "button":
-                    		payload = {
-                        		"device": {
-                                "identifiers": "cwbs",
-                                "name": "코맥스 월패드 by TcT",
-                                "manufacturer": "commax",
-                        		},
-                        		"device_class": 'EV',
-                        			
-                            "name": f'{device}{idx+1}',
-                            "object_id": f'cwbs_{device.lower()}{idx + 1}',
-                            "unique_id": f'cwbs_{device.lower()}{idx + 1}',
-                            "cmd_t": "~/command",
-                            "stat_t": "~/state"
-                    				}
                     else:
                         payload = {
                             "device": {
@@ -529,8 +516,8 @@ def do_work(config, device_list):
                         send_data['count'] = send_data['count'] + 1
                         #메시지 Recv할때까지 계속 추가.
                         #엘베는 마땅한 리턴이없는데 계속보낼수 없으니 10번만 호출하자.          
-                        if send_data['count'] > 10: #and send_data['sendcmd'] == "A0010108F5009F3E":
-                        		log('[SIGNAL] Send over 10 times. Send Failure. Delete a queue: {}'.format(send_data))
+                        if send_data['count'] > 3: #and send_data['sendcmd'] == "A0010108F5009F3E":
+                        		log('[SIGNAL] Send over 3 times. Send Failure. Delete a queue: {}'.format(send_data))
                         else :
                             QUEUE.append(send_data)
                         		
