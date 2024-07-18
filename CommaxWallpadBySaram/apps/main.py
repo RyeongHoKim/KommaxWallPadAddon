@@ -476,7 +476,6 @@ def do_work(config, device_list):
                                 "name": "코맥스 월패드 by TcT",
                                 "manufacturer": "commax",
                             },
-                            "device_class": 'floor',
                             "name": f'{device}{idx + 1} Floor',
                             "object_id": f'cwbs_{device.lower()}{idx + 1}_floor',
                             "unique_id": f'cwbs_{device.lower()}{idx + 1}_floor',
