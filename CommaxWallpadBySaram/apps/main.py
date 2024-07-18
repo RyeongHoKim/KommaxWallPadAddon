@@ -275,7 +275,7 @@ def do_work(config, device_list):
                     break
 
             device_name = prefix_list.get(data[:2])
-            log("recv_from_elfin Device_name => " + device_name)
+            #log("recv_from_elfin Device_name => " + device_name)
             if device_name == 'Thermo':
                 curTnum = device_list['Thermo']['curTemp']
                 setTnum = device_list['Thermo']['setTemp']
