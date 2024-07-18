@@ -446,8 +446,6 @@ def do_work(config, device_list):
 
                         if device == "EV":
                             log("on_connect()/else/device => " + device)
-                            payload["device_class"] = 'None'
-                            payload["entity_category"] = 'None'
                             
                     log(config_topic)
                     log(json.dumps(payload))
@@ -480,8 +478,7 @@ def do_work(config, device_list):
                             "object_id": f'cwbs_{device.lower()}{idx + 1}_floor',
                             "unique_id": f'cwbs_{device.lower()}{idx + 1}_floor',
                             "entity_category": 'diagnostic',
-                            "stat_t": f'{HA_TOPIC}/{device}{idx + 1}/floor/state',
-                            "unit_of_measurement": "F"
+                            "stat_t": f'{HA_TOPIC}/{device}{idx + 1}/floor/state'
                         }                        
                         log(config_topic)
                         log(json.dumps(payload))
