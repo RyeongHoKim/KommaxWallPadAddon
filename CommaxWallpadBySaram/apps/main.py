@@ -444,6 +444,11 @@ def do_work(config, device_list):
                             payload["device_class"] = 'outlet'
                             payload["entity_category"] = 'diagnostic'
 
+                        if device == "EV":
+                            log("on_connect()/else/device => " + device)
+                            payload["device_class"] = 'ev'
+                            payload["entity_category"] = 'diagnostic'
+                            
                     log(config_topic)
                     log(json.dumps(payload))
                     mqtt_client.publish(config_topic, json.dumps(payload))
