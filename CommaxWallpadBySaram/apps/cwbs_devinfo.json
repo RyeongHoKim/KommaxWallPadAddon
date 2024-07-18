@@ -34,7 +34,7 @@
     "commandON": "2201010100000025",
 
     "stateOFF": "A0000100001500B6",
-    "stateON": "A0010100001500B7"
+    "stateON": "A001010000F50097"
   },
   "Gas": {
     "type": "button",
