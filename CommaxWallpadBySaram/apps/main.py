@@ -466,22 +466,7 @@ def do_work(config, device_list):
                             "stat_t": f'{HA_TOPIC}/{device}{idx + 1}/watt/state',
                             "unit_of_measurement": "W"
                         }
-                    """    이거 일단 주석해보자    
-                    if device == "EV":
-                        config_topic = f'homeassistant/sensor/cwbs_{device}{idx + 1}_floor/config'
-                        payload = {
-                            "device": {
-                                "identifiers": "cwbs",
-                                "name": "코맥스 월패드 by TcT",
-                                "manufacturer": "commax",
-                            },
-                            "name": f'{device}{idx + 1} Floor',
-                            "object_id": f'cwbs_{device.lower()}{idx + 1}_floor',
-                            "unique_id": f'cwbs_{device.lower()}{idx + 1}_floor',
-                            "entity_category": 'diagnostic',
-                            "stat_t": f'{HA_TOPIC}/{device}{idx + 1}/floor/state'
-                        }
-                    """                        
+                                          
                         log(config_topic)
                         log(json.dumps(payload))
                         mqtt_client.publish(config_topic, json.dumps(payload))
