@@ -446,8 +446,8 @@ def do_work(config, device_list):
 
                         if device == "EV":
                             log("on_connect()/else/device => " + device)
-                            payload["device_class"] = 'ev'
-                            payload["entity_category"] = 'diagnostic'
+                            payload["device_class"] = 'None'
+                            payload["entity_category"] = 'None'
                             
                     log(config_topic)
                     log(json.dumps(payload))
