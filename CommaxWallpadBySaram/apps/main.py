@@ -402,6 +402,7 @@ def do_work(config, device_list):
                 for idx in range(len(DEVICE_LISTS[device]['list'])):
                     config_topic = f'homeassistant/{DEVICE_LISTS[device]["type"]}/commax_{device.lower()}{idx + 1}/config'
                     log("on_connect() device => " + device)
+                    log("on_connect() DEVICE_LISTS[device][type] => " + DEVICE_LISTS[device]["type"])
                     if DEVICE_LISTS[device]["type"] == "climate":
                         payload = {
                             "device": {
