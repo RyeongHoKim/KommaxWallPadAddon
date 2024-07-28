@@ -71,10 +71,6 @@
     "Number": 1,
     "commandON": "A0010100081500BF",
     "stateON": "2301210000000045",
-<<<<<<< HEAD
-    "BasementFloor": 2
-=======
     "BasementFloor": 0
->>>>>>> origin/master
   }
 }

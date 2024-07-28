@@ -533,22 +533,9 @@ def do_work(config, device_list):
                         		
                         if elfin_log:
                             log('[SIGNAL] Send try count : {}'.format(send_data['count']))
-                        
-<<<<<<< HEAD
-                        #슬립이 없으면 너무 빨리보내니까 슬립좀 주자.        
-                        #await asyncio.sleep(0.05)
-                        await asyncio.sleep(0.5)
-                        
-                        #엘베는 마땅한 리턴이없는데 계속보낼수 없으니 5번만 호출하자.
-                        #if send_data['count'] < 5 and send_data['sendcmd'] == "A001010008F5009F":
-                        #    send_data['count'] = send_data['count'] + 1
-                        #    QUEUE.append(send_data)
-                        #else:
-                        #    if elfin_log:
-                        #        log('[SIGNAL] Send over 5 times. Send Failure. Delete a queue: {}'.format(send_data))
-=======
-                        await asyncio.sleep(0.5)
->>>>>>> origin/master
+
+                        await asyncio.sleep(0.2)
+
             except Exception as err:
                 log('[ERROR] send_to_elfin(): {}'.format(err))
                 return True
