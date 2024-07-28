@@ -70,7 +70,7 @@
     "type": "switch",
     "Number": 2,
     "commandON": "A0010100081500BF",
-    "stateON": "300E00000000003E",
+    "stateON": "2301210000000045",
     "BasementFloor": 2
   }
 }

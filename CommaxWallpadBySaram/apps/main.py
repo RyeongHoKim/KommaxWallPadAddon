@@ -531,7 +531,7 @@ def do_work(config, device_list):
                         
                         #슬립이 없으면 너무 빨리보내니까 슬립좀 주자.        
                         #await asyncio.sleep(0.05)
-                        await asyncio.sleep(1)
+                        await asyncio.sleep(0.5)
                         
                         #엘베는 마땅한 리턴이없는데 계속보낼수 없으니 5번만 호출하자.
                         #if send_data['count'] < 5 and send_data['sendcmd'] == "A001010008F5009F":
