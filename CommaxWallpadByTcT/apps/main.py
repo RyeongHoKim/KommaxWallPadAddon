@@ -513,6 +513,8 @@ def do_work(config, device_list):
                         if send_data['count'] < 20:
                             send_data['count'] = send_data['count'] + 1
                             QUEUE.append(send_data)
+                            if elfin_log:
+                                log('[SIGNAL] 신호 전송 카운트: {}'.format(send_data['count']))
                         else:
                             if elfin_log:
                                 log('[SIGNAL] Send over 5 times. Send Failure. Delete a queue: {}'.format(send_data))
