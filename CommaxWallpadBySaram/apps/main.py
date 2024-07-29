@@ -244,7 +244,7 @@ def do_work(config, device_list):
                 sendcmd = DEVICE_LISTS[device]['list'][idx-1].get('command' + value)
                 if sendcmd:
                     recvcmd = [DEVICE_LISTS[device]['list'][idx-1].get('state' + value, 'NULL')]
-                    QUEUE.append({'sendcmd': sendcmd, 'recvcmd': recvcmd, 'count': 0})		
+                    QUEUE.append({'sendcmd': sendcmd, 'recvcmd': recvcmd, 'count': 0})
                     if debug:
                         log('[DEBUG] Queued ::: sendcmd: {}, recvcmd: {}'.format(sendcmd, recvcmd))
                 else:
@@ -275,9 +275,6 @@ def do_work(config, device_list):
                     break
 
             device_name = prefix_list.get(data[:2])
-            
-            log("recv_from_elfin Device_name => " + device_name)
-            
             if device_name == 'Thermo':
                 curTnum = device_list['Thermo']['curTemp']
                 setTnum = device_list['Thermo']['setTemp']
@@ -403,8 +400,6 @@ def do_work(config, device_list):
             for device in DEVICE_LISTS:
                 for idx in range(len(DEVICE_LISTS[device]['list'])):
                     config_topic = f'homeassistant/{DEVICE_LISTS[device]["type"]}/commax_{device.lower()}{idx + 1}/config'
-                    log("on_connect() device => " + device)
-                    log("on_connect() DEVICE_LISTS[device][type] => " + DEVICE_LISTS[device]["type"])
                     if DEVICE_LISTS[device]["type"] == "climate":
                         payload = {
                             "device": {
@@ -427,7 +422,7 @@ def do_work(config, device_list):
                             "temp_step":"1",
                             "modes":["off", "heat"],
                             "mode_state_template": "{% set modes = {'OFF': 'off', 'ON': 'heat'} %} {{modes[value] if value in modes.keys() else 'off'}}"
-                            }
+                                }
                     else:
                         payload = {
                             "device": {
@@ -446,9 +441,6 @@ def do_work(config, device_list):
                             payload["device_class"] = 'outlet'
                             payload["entity_category"] = 'diagnostic'
 
-                        if device == "EV":
-                            log("on_connect()/else/device => " + device)
-                            
                     log(config_topic)
                     log(json.dumps(payload))
                     mqtt_client.publish(config_topic, json.dumps(payload))
@@ -468,7 +460,6 @@ def do_work(config, device_list):
                             "stat_t": f'{HA_TOPIC}/{device}{idx + 1}/watt/state',
                             "unit_of_measurement": "W"
                         }
-                                          
                         log(config_topic)
                         log(json.dumps(payload))
                         mqtt_client.publish(config_topic, json.dumps(payload))
@@ -516,26 +507,16 @@ def do_work(config, device_list):
                 elif time.time_ns() - COLLECTDATA['LastRecv'] > 100000000:
                     if QUEUE:
                         send_data = QUEUE.pop(0)
-
                         if elfin_log:
                             log('[SIGNAL] 신호 전송: {}'.format(send_data))
                         mqtt_client.publish(ELFIN_TOPIC + '/send', bytes.fromhex(send_data['sendcmd']))
-                        send_data['count'] = send_data['count'] + 1
-                        
-                        #메시지 Recv할때까지 계속 추가.
-                        #엘베는 5번만 호출하면 씹히진 않는듯함.
-                        if send_data['sendcmd'] == "A0010100081500BF":
-                        		if send_data['count'] > 5:
-                        				#엘베 호출 취소.
-                        				log('[SIGNAL] Send over 5 times. EV Call Send Failure. Delete a queue: {}'.format(send_data))                       
-                        else :
+                        # await asyncio.sleep(0.01)
+                        if send_data['count'] < 5:
+                            send_data['count'] = send_data['count'] + 1
                             QUEUE.append(send_data)
-                        		
-                        if elfin_log:
-                            log('[SIGNAL] Send try count : {}'.format(send_data['count']))
-
-                        await asyncio.sleep(0.2)
-
+                        else:
+                            if elfin_log:
+                                log('[SIGNAL] Send over 5 times. Send Failure. Delete a queue: {}'.format(send_data))
             except Exception as err:
                 log('[ERROR] send_to_elfin(): {}'.format(err))
                 return True
