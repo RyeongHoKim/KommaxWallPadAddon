@@ -512,7 +512,8 @@ def do_work(config, device_list):
                         mqtt_client.publish(ELFIN_TOPIC + '/send', bytes.fromhex(send_data['sendcmd']))
                         if send_data['count'] < 20:
                             send_data['count'] = send_data['count'] + 1
-                            QUEUE.append(send_data)
+                            #QUEUE.append(send_data)
+                            QUEUE.insert(0,send_data)  #QUEUE에 있는거 먼저 처리하고싶어..
                             if elfin_log:
                                 log('[SIGNAL] 신호 전송 카운트: {}'.format(send_data['count']))
                         else:

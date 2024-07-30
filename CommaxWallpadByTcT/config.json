@@ -1,6 +1,6 @@
 {
   "name": "COMMAX Wallpad by TcT",
-  "version": "1.0.9.52",
+  "version": "1.0.9.53",
   "slug": "cwbs",
   "url": "https://github.com/RyeongHoKim/KommaxWallPadAddon",
   "description": "mqtt 통신을 활용한 코맥스 월패드 컨트롤러",
