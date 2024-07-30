@@ -514,7 +514,7 @@ def do_work(config, device_list):
                             send_data['count'] = send_data['count'] + 1
                             #QUEUE.append(send_data)
                             QUEUE.insert(0,send_data)  #QUEUE에 있는거 먼저 처리하고싶어..
-                            if elfin_log:
+                            if debug:
                                 log('[SIGNAL] 신호 전송 카운트: {}'.format(send_data['count']))
                         else:
                             if elfin_log:
