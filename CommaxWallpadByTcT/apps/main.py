@@ -510,19 +510,15 @@ def do_work(config, device_list):
                         if elfin_log:
                             log('[SIGNAL] 신호 전송: {}'.format(send_data))
                         mqtt_client.publish(ELFIN_TOPIC + '/send', bytes.fromhex(send_data['sendcmd']))
-                        if send_data['count'] < 20:
-                            send_data['count'] = send_data['count'] + 1
-                            #QUEUE.append(send_data)
-                            QUEUE.insert(0,send_data)  #QUEUE에 있는거 먼저 처리하고싶어..
-                            if debug:
-                                log('[SIGNAL] 신호 전송 카운트: {}'.format(send_data['count']))
-                        else:
-                            if elfin_log:
-                                log('[SIGNAL] Send over 5 times. Send Failure. Delete a queue: {}'.format(send_data))
+                        QUEUE.insert(0,send_data)  #QUEUE에 있는거 먼저 처리하고싶어.
+                        send_data['count'] = send_data['count'] + 1
+                        
+                        if elfin_log:
+                            log('[SIGNAL] Send over 5 times. Send Failure. Delete a queue: {}'.format(send_data))
             except Exception as err:
                 log('[ERROR] send_to_elfin(): {}'.format(err))
                 return True
-            await asyncio.sleep(0.05)
+            await asyncio.sleep(0.1)
 
     mqtt_client.username_pw_set(config['mqtt_id'], config['mqtt_password'])
     mqtt_client.on_connect = on_connect
