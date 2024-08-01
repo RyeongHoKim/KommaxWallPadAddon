@@ -510,11 +510,9 @@ def do_work(config, device_list):
                         if elfin_log:
                             log('[SIGNAL] 신호 전송: {}'.format(send_data))
                         mqtt_client.publish(ELFIN_TOPIC + '/send', bytes.fromhex(send_data['sendcmd']))
-                        QUEUE.insert(0,send_data)  #QUEUE에 있는거 먼저 처리하고싶어.
+                        QUEUE.insert(0,send_data)  #QUEUE에 있는거 먼저 처리하고싶어.??
+                        #QUEUE.append(send_data)   #append랑 insert랑 뭐가 유리한지 고민좀 해보자..
                         send_data['count'] = send_data['count'] + 1
-                        
-                        if elfin_log:
-                            log('[SIGNAL] Send over 5 times. Send Failure. Delete a queue: {}'.format(send_data))
             except Exception as err:
                 log('[ERROR] send_to_elfin(): {}'.format(err))
                 return True
