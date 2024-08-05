@@ -510,13 +510,20 @@ def do_work(config, device_list):
                         if elfin_log:
                             log('[SIGNAL] 신호 전송: {}'.format(send_data))
                         mqtt_client.publish(ELFIN_TOPIC + '/send', bytes.fromhex(send_data['sendcmd']))
-                        QUEUE.insert(0,send_data)  #QUEUE에 있는거 먼저 처리하고싶어.??
+                        
+                        if send_data['sendcmd'] == 'A0010100081500BF' and send_data['count'] > 10 :
+												    log('[SIGNAL] Send EV Call over 10 times. Send Failure. Delete a queue: {}'.format(send_data))
+												elif send_data['count'] < 50:
+												    QUEUE.insert(0,send_data)  #QUEUE에 있는거 먼저 처리하고싶어.??
+												else:
+												    log('[SIGNAL] Send Call over 100 times. Send Failure. Delete a queue: {}'.format(send_data))
+                        
                         #QUEUE.append(send_data)   #append랑 insert랑 뭐가 유리한지 고민좀 해보자..
                         send_data['count'] = send_data['count'] + 1
             except Exception as err:
                 log('[ERROR] send_to_elfin(): {}'.format(err))
                 return True
-            await asyncio.sleep(0.1)
+            await asyncio.sleep(0.5)
 
     mqtt_client.username_pw_set(config['mqtt_id'], config['mqtt_password'])
     mqtt_client.on_connect = on_connect
