@@ -511,7 +511,7 @@ def do_work(config, device_list):
                             log('[SIGNAL] 신호 전송: {}'.format(send_data))
                         mqtt_client.publish(ELFIN_TOPIC + '/send', bytes.fromhex(send_data['sendcmd']))
                         
-                        if send_data['sendcmd'] == 'A0010100081500BF' and send_data['count'] > 10 :
+                        if send_data['sendcmd'] == 'A0010100081500BF' and send_data['count'] > 3 :
                             log('[SIGNAL] Send EV Call over 10 times. Send Failure. Delete a queue: {}'.format(send_data))
                         elif send_data['count'] < 50:
                             QUEUE.insert(0,send_data)  #QUEUE에 있는거 먼저 처리하고싶어.??
